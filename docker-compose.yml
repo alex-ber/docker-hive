@@ -1,0 +1,10 @@
+version: '3'
+services:
+  local-hive:
+    image: alexberkovich/docker-hive
+    tty: true
+    stdin_open: true
+    ports:
+      - "8030-8088:8030-8088"
+      - "10000:10000"
+      - "10002:10002"

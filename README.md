@@ -30,7 +30,7 @@ Create image
 docker build . -t alexberkovich/docker-hive
 ```
 
-Or even, if you run the daemon with experimental features enabled,: 
+Or even, if you run the daemon with experimental features enabled: 
 
 ```
 docker build --squash . -t alexberkovich/docker-hive
@@ -62,6 +62,11 @@ docker pull alexberkovich/docker-hive
 docker container stop local-hive; docker rm local-hive; 
 
 Run image
+```
+docker-compose up -d
+```
+
+Or explicitly:
 
 ```
 docker run -p 8030-8088:8030-8088 -p 10000:10000 -p 10002:10002 -d --name local-hive alexberkovich/docker-hive

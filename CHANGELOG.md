@@ -2,6 +2,15 @@
 All notable changes to this project will be documented in this file.
 
 
+0.0.4
+-----
+Major
+* License added
+* conf/yarn-site.xml added yarn.nodemanager.address set to localhost:9999
+
+Minor
+* Added docker-compose.yml and short description for it's usage
+
 0.0.3
 -----
 Major
