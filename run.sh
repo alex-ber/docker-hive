@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -ex
+
 /usr/sbin/sshd -D &
 
 $HADOOP_PREFIX/sbin/hadoop-daemon.sh start namenode

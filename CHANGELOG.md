@@ -2,6 +2,16 @@
 All notable changes to this project will be documented in this file.
 
 
+0.0.3
+-----
+Major
+* Changing URL for hadoop & hive download.
+
+Minor
+* Setting fixed version for packages.
+* "set -ex" added to dfs.sh
+* "set -ex" added to run.sh
+
 0.0.2
 -----
 Major

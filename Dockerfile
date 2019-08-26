@@ -1,16 +1,15 @@
 FROM amazonlinux
 
-RUN yum update -y && \
-    yum install -y openssh \
-    openssh-clients \
-    openssh-server \
-    which \
-    procps \
-    tar \
-    curl \
-    wget \
-    net-tools \
-    nano
+RUN yum install -y openssh-7.4p1-16.amzn2.0.6 \
+    openssh-clients-7.4p1-16.amzn2.0.6 \
+    openssh-server-7.4p1-16.amzn2.0.6 \
+    which-2.20-7.amzn2.0.2 \
+    procps-ng-3.3.10-17.amzn2.2.2 \
+    tar-1.26-34.amzn2 \
+    curl-7.61.1-11.amzn2.0.2 \
+    wget-1.14-18.amzn2.1 \
+    net-tools-2.0-0.22.20131004git.amzn2.0.2 \
+    nano-2.9.8-2.amzn2.0.1
 
 #disable coloring for nano, see https://stackoverflow.com/a/55597765/1137529
 RUN echo "syntax \"disabled\" \".\"" > ~/.nanorc; echo "color green \"^$\"" >> ~/.nanorc
@@ -29,13 +28,13 @@ COPY conf/ssh_config /root/.ssh/config
 RUN chmod 0600 ~/.ssh/authorized_keys ~/.ssh/config
 
 # install java
-RUN yum install java-1.8.0-openjdk -y
+RUN yum install java-1.8.0-openjdk-1.8.0.201.b09-0.amzn2 -y
 ENV JAVA_HOME /usr/lib/jvm/jre-1.8.0-openjdk/
 ENV JAVA_PATH $JAVA_HOME
 ENV PATH $PATH:$JAVA_HOME/bin
 
 # install hadoop
-RUN wget http://apache.claz.org/hadoop/common/hadoop-2.8.5/hadoop-2.8.5.tar.gz
+RUN wget http://apache.mivzakim.net/hadoop/common/hadoop-2.8.5/hadoop-2.8.5.tar.gz
 RUN tar -xzf hadoop-2.8.5.tar.gz -C /usr/local/
 RUN cd /usr/local && ln -s ./hadoop-2.8.5 hadoop
 ENV HADOOP_HOME /usr/local/hadoop
@@ -49,6 +48,7 @@ ENV HADOOP_COMMON_LIB_NATIVE_DIR $HADOOP_HOME/lib/native
 ENV LD_LIBRARY_PATH $HADOOP_HOME/lib/native/:$LD_LIBRARY_PATH
 ENV PATH $PATH:$HADOOP_HOME/sbin:$HADOOP_HOME/bin
 
+
 # config hadoop
 RUN sed -i '/^export JAVA_HOME/ s:.*:export JAVA_HOME=/usr/lib/jvm/jre-1.8.0-openjdk/:' $HADOOP_PREFIX/etc/hadoop/hadoop-env.sh
 COPY conf/core-site.xml /usr/local/hadoop/etc/hadoop/core-site.xml
@@ -57,7 +57,7 @@ COPY conf/mapred-site.xml /usr/local/hadoop/etc/hadoop/mapred-site.xml
 COPY conf/yarn-site.xml /usr/local/hadoop/etc/hadoop/yarn-site.xml
 
 #install hive
-RUN wget http://apache.cp.if.ua/hive/hive-2.3.5/apache-hive-2.3.5-bin.tar.gz
+RUN wget http://mirror.apache-kr.org/hive/hive-2.3.5/apache-hive-2.3.5-bin.tar.gz
 RUN tar -xzf apache-hive-2.3.5-bin.tar.gz -C /usr/local/hadoop/
 RUN cd /usr/local/hadoop && ln -s ./apache-hive-2.3.5-bin hive
 ENV HIVE_HOME $HADOOP_HOME/hive

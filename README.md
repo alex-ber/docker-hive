@@ -21,24 +21,38 @@ see http://hadoop.apache.org/docs/r2.8.5/hadoop-project-dist/hadoop-common/Singl
 Clone repo
 
 ```
-git clone git@github.com:ops-guru/docker-hive.git
+git clone git@github.com:alexberkovich/docker-hive.git
 ```
 
 Create image
 
 ```
-docker build . -t opsguruhub/docker-hive
+docker build . -t alexberkovich/docker-hive
 ```
 
+Or even, if you run the daemon with experimental features enabled,: 
+
+```
+docker build --squash . -t alexberkovich/docker-hive
+```
+
+In Docker 1.13, a new --squash parameter was added. It can be used to reduce the size of an image by removing files 
+which are not present anymore, and reduce multiple layers to a single one between the origin and the latest stage. 
+
+
+
 You may want to do some cleanup first:
-docker container stop local-hive; docker rm local-hive; docker rmi opsguruhub/docker-hive
+
+```
+docker container stop local-hive; docker rm local-hive; docker rmi alexberkovich/docker-hive
+```
 
 ## DockerHub
 
 Image available on DockerHub
 
 ```
-docker pull opsguruhub/docker-hive
+docker pull alexberkovich/docker-hive
 ```
 
 ## Test
@@ -50,7 +64,7 @@ docker container stop local-hive; docker rm local-hive;
 Run image
 
 ```
-docker run -p 8030-8088:8030-8088 -p 10000:10000 -p 10002:10002 -d --name local-hive opsguruhub/docker-hive
+docker run -p 8030-8088:8030-8088 -p 10000:10000 -p 10002:10002 -d --name local-hive alexberkovich/docker-hive
 ```
 
 Wait for services started
@@ -80,4 +94,11 @@ Now you should be able to query
 1 row selected (1.921 seconds)
 ```
 
+You can access bash with the following command
+
+```
+docker exec -it local-hive bash
+```
+
 You can access YARN here http://localhost:8088/cluster
+

@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -ex
+
 /usr/sbin/sshd -D &
 
 echo "starting fs"
