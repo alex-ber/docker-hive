@@ -1,1 +1,17 @@
+# Eclipse  #
+###################
+
+.classpath
+.project
+.settings/
+.factorypath
+target/
+bin/
+test-output/
+
+# Idea #
+##################
+*.iml
+*.ipr
+*.iws
 .idea/

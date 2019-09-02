@@ -21,7 +21,7 @@ see http://hadoop.apache.org/docs/r2.8.5/hadoop-project-dist/hadoop-common/Singl
 Clone repo
 
 ```
-git clone git@github.com:alexberkovich/docker-hive.git
+git clone git@gitlab.com:pursway-group/dev/dockefiles/docker-hive.git
 ```
 
 Create image
@@ -69,8 +69,9 @@ docker-compose up -d
 Or explicitly:
 
 ```
-docker run -p 8030-8088:8030-8088 -p 10000:10000 -p 10002:10002 -d --name local-hive alexberkovich/docker-hive
+docker run -p 8030-8088:8030-8088 -p 8030-8033:8030-8033 -p 8040:8040 -p 8042:8042 -p 8088:8088 -p  -p 10000:10000 -p 10002:10002 -d --name local-hive alexberkovich/docker-hive
 ```
+
 
 Wait for services started
 
@@ -78,13 +79,16 @@ Wait for services started
 docker logs local-hive
 ```
 
-Or you can open bash:
-docker exec `-it` local-hive bash
-
-Start beeline client and connect to hive
+You can access bash with the following command
 
 ```
-docker exec -it local-hive /usr/local/hadoop/hive/bin/beeline -u jdbc:hive2://localhost:10000 -n "" -p ""
+docker exec -it local-hive bash
+```
+
+Start beeline client and connect to hive:
+
+```
+/usr/local/hadoop/hive/bin/beeline -u jdbc:hive2://localhost:10000 -n "" -p ""
 ```
 
 Now you should be able to query
@@ -99,11 +103,6 @@ Now you should be able to query
 1 row selected (1.921 seconds)
 ```
 
-You can access bash with the following command
-
-```
-docker exec -it local-hive bash
-```
 
 You can access YARN here http://localhost:8088/cluster
 
