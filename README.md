@@ -69,7 +69,7 @@ docker-compose up -d
 Or explicitly:
 
 ```
-docker run -p 8030-8033:8030-8033 -p 8040:8040 -p 8042:8042 -p 8088:8088 -p  -p 10000:10000 -p 10002:10002 -d --name local-hive alexberkovich/docker-hive
+docker run -p 8030-8033:8030-8033 -p 8040:8040 -p 8042:8042 -p 8088:8088 -p 10000:10000 -p 10002:10002 -d --name local-hive alexberkovich/docker-hive
 ```
 
 
