@@ -21,7 +21,7 @@ see http://hadoop.apache.org/docs/r2.8.5/hadoop-project-dist/hadoop-common/Singl
 Clone repo
 
 ```
-git clone git@gitlab.com:pursway-group/dev/dockefiles/docker-hive.git
+git clone git@github.com:alex-ber/docker-hive.git
 ```
 
 Create image
