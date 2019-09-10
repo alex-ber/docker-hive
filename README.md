@@ -21,7 +21,7 @@ see http://hadoop.apache.org/docs/r2.8.5/hadoop-project-dist/hadoop-common/Singl
 Clone repo
 
 ```
-git clone git@github.com:alex-ber/docker-hive.git
+git clone https://github.com/alex-ber/alpine-openjdk.git
 ```
 
 Create image
