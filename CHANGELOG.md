@@ -2,6 +2,12 @@
 All notable changes to this project will be documented in this file.
 
 
+0.0.5
+-----
+Minor
+* Change README.md to reflect usage of private docker registry on Gitlab.
+* Hive link changed.
+
 0.0.4
 -----
 Major
@@ -20,6 +26,12 @@ Minor
 * Setting fixed version for packages.
 * "set -ex" added to dfs.sh
 * "set -ex" added to run.sh
+
+TBD
+Tez
+https://tez.apache.org/install.html
+https://thecustomizewindows.com/2018/02/install-apache-tez-one-node-hadoop/
+https://raw.githubusercontent.com/apache/incubator-tez/branch-0.2.0/INSTALL.txt
 
 0.0.2
 -----

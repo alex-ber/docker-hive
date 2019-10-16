@@ -57,7 +57,8 @@ COPY conf/mapred-site.xml /usr/local/hadoop/etc/hadoop/mapred-site.xml
 COPY conf/yarn-site.xml /usr/local/hadoop/etc/hadoop/yarn-site.xml
 
 #install hive
-RUN wget http://mirror.apache-kr.org/hive/hive-2.3.5/apache-hive-2.3.5-bin.tar.gz
+#RUN wget http://mirror.apache-kr.org/hive/hive-2.3.5/apache-hive-2.3.5-bin.tar.gz
+RUN wget https://archive.apache.org/dist/hive/hive-2.3.5/apache-hive-2.3.5-bin.tar.gz
 RUN tar -xzf apache-hive-2.3.5-bin.tar.gz -C /usr/local/hadoop/
 RUN cd /usr/local/hadoop && ln -s ./apache-hive-2.3.5-bin hive
 ENV HIVE_HOME $HADOOP_HOME/hive
@@ -69,6 +70,7 @@ COPY ./dfs.sh /etc/dfs.sh
 RUN /etc/dfs.sh
 
 COPY ./run.sh /etc/run.sh
+#COPY ./alex_hive_udf.jar ${HIVE_HOME}/auxlib/alex_hive_udf.jar
 
 # clean
 RUN rm hadoop-2.8.5.tar.gz apache-hive-2.3.5-bin.tar.gz
@@ -83,3 +85,14 @@ EXPOSE 10020 19888
 EXPOSE 8030 8031 8032 8033 8040 8042 8088
 #Hive ports
 EXPOSE 10000 10002
+
+
+#docker rmi -f alex-docker-hive
+#docker rm -f alex-local-hive
+#docker build --squash . -t alex-docker-hive
+#docker run -p 8030-8033:8030-8033 -p 8040:8040 -p 8042:8042 -p 8088:8088 -p 10000:10000 -p 10002:10002 -d --name alex-local-hive alex-docker-hive
+#docker exec -it $(docker ps -q -n=1) bash
+#docker tag alex-docker-hive registry.gitlab.com/pursway-group/dev/dockerfiles/docker-hive:0.0.5
+#docker push registry.gitlab.com/pursway-group/dev/dockerfiles/docker-hive:0.0.5
+
+
