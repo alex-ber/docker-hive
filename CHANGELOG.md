@@ -2,6 +2,23 @@
 All notable changes to this project will be documented in this file.
 
 
+
+0.0.6
+-----
+* Added script checkisup.sh. It is intented to be run as
+```
+docker exec alex-local-hive /etc/checkisup.sh
+```
+If it exit with return code 0, this means that HiveService2 is up and running.
+
+If it exit with return code other than 0, there is some problem (see stderr).
+
+If hiveservice is not yet running, this script will wait for it.
+
+If after 10 retries HiveService2 is still not running, 
+
+the script will give up (with non-zero return code).
+
 0.0.5
 -----
 Minor

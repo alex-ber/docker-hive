@@ -66,6 +66,7 @@ ENV HIVE_HOME $HADOOP_HOME/hive
 RUN chown -R root:root /usr/local/hadoop-2.8.5
 RUN $HADOOP_PREFIX/bin/hdfs namenode -format
 COPY ./dfs.sh /etc/dfs.sh
+COPY ./checkisup.sh /etc/checkisup.sh
 
 RUN /etc/dfs.sh
 
@@ -92,7 +93,6 @@ EXPOSE 10000 10002
 #docker build --squash . -t alex-docker-hive
 #docker run -p 8030-8033:8030-8033 -p 8040:8040 -p 8042:8042 -p 8088:8088 -p 10000:10000 -p 10002:10002 -d --name alex-local-hive alex-docker-hive
 #docker exec -it $(docker ps -q -n=1) bash
-#docker tag alex-docker-hive registry.gitlab.com/pursway-group/dev/dockerfiles/docker-hive:0.0.5
-#docker push registry.gitlab.com/pursway-group/dev/dockerfiles/docker-hive:0.0.5
-
+#docker tag alex-docker-hive registry.gitlab.com/pursway-group/dev/dockerfiles/docker-hive:0.0.6
+#docker push registry.gitlab.com/pursway-group/dev/dockerfiles/docker-hive:0.0.6
 
