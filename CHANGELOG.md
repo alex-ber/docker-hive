@@ -2,6 +2,142 @@
 All notable changes to this project will be documented in this file.
 
 
+0.1.0
+-----
+Major
+* BREAKING CHANGE: checkisup.sh is moved to $HADOOP_HOME/hive/sbin/ and this directory is added to PATH.
+
+* BREAKING CHANGE: Hiveserver2 output logs to files, not to stdout & stderr.
+
+It output to $HADOOP_HOME/logs/hiveservier2_out.log instead of stdout.
+
+and to $HADOOP_HOME/logs/hiveservier2_err.log instead of stderr.
+
+* Now, 
+
+```
+docker logs alex-local-hive
+```
+
+will not work.
+
+* README.md changed, to reflect the change above. You should run
+
+```
+docker exec alex-local-hive checkisup.sh
+```
+
+to see whether Hiveserver2 is up.
+
+
+* README.md changed, refer to container as alex-local-hive and not local-hive
+
+
+Now, checkisup.sh is intended to be run 
+```
+docker exec alex-local-hive checkisup.sh
+```
+
+* docker-compose.yml modified, added container-name. 
+
+* Added func.sh. It is intended for internal usage.
+
+pdate  -  function that prints current timesatmp.
+
+echoerr, echowarn, echoinfo - function that mimic logger output.
+
+killit - takes process_id as parameter and send to it kill signal.
+
+If it fails, send kill -9.
+
+If it still fails, it will exit with return code 1.
+
+findpid - helper function to find process_id. 
+
+It takes as parameter string that will be used in grep in```ps aux```.
+
+* Added script checkisup.sh.
+
+Basically, this bash script is busy wait loop that tries to connect to the Hive service with Beeline (CLI tool to connect to Hive). It makes 10 different such attempts with sleep between them. In each attempt it wait for output from Beeline, if the output is not yet ready, there is 10 inner retires to read the output (with some sleep in-between). If it succeed than return code 0 is returned. If after 10 attempts, connection wasn't established, than return code non-zero is returned.
+
+
+* Added script start-hiveserver2.sh
+It is intended for internal usage.
+
+There is 2 mode in which this script can be run:
+
+Without any parameter. 
+
+With parameter.
+
+Basically, we’re looking for Hive process using ps utility and some identification string. If we found one, we first of all stop it.⁶
+
+If start-hiveserver2.sh run without parameter, than we starting up Hive Server with existing Hive Metastore.
+
+If start-hiveserver2.sh run with parameter (it is intended to be indication to create Hive Mestastore, but technically it can be anything) it will be passed through to hiveserver2.
+
+
+* Added script stop-hiveserver2.sh
+It is intended for internal usage.
+
+
+Basically, we’re looking for Hive process using ps utility and some identification string, than we use kill -9.
+
+
+* Added script init-metastore.sh
+It is intended for internal usage.
+
+It deletes metastore_db directory, and runs initSchema by schematool. It use Derby as storage. The data is stored in metastore_db directory.
+
+
+Note:
+
+init-metastore.sh can be technically run when Hive Service is up, but this should be avoided.
+
+init-metastore.sh will not create Version table, etc (it is done when Hive Service is running up only).
+
+
+
+* Added script reinit-metastore.sh
+
+Intended usage is:
+
+```
+docker exec alex-local-hive reinit-metastore.sh
+```
+
+Note:
+
+1.This script doesn’t format HDFS. So, you will have metastore and HDFS not in sync. See reinit-hdfs.sh above.
+
+2.On mine machine this takes ~36 seconds. After this script finish to run, you Hive Service is available.
+
+
+Basically, we stop Hive Server, then init metastore and then start Hive Server in the mode that create metastore_db
+
+
+* Added script reinit-hdfs.sh
+
+Intended usage is:
+
+```
+docker exec alex-local-hive reinit-hdfs.sh
+```
+
+Note:
+
+
+1.This script doesn’t format metastore. So, you will have metastore and HDFS not in sync. See reinit-metasore.sh below.
+
+2.On mine machine this takes ~70 seconds. After this script finish to run, you can use HDFS in regular way.
+
+Basically, we stop all HDFS and Yarn services. We format namenode and remove all data from datanode, we remove another leftovers from previous run, than we resrart HDFS and Yarn service and recreate folders that Hive Service expect to be present.
+
+
+
+
+For more detail explantaion see [https://medium.com/@alex_ber/docker-hive-scripts-52f7aa84bb7d](https://medium.com/@alex_ber/docker-hive-scripts-52f7aa84bb7d) 
+
 
 0.0.6
 -----

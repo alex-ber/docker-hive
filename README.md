@@ -69,14 +69,18 @@ docker-compose up -d
 Or explicitly:
 
 ```
-docker run -p 8030-8033:8030-8033 -p 8040:8040 -p 8042:8042 -p 8088:8088 -p 10000:10000 -p 10002:10002 -d --name local-hive alexberkovich/docker-hive
+docker run -p 8030-8033:8030-8033 -p 8040:8040 -p 8042:8042 -p 8088:8088 -p 10000:10000 -p 10002:10002 -d --name alex-local-hive alexberkovich/docker-hive
 ```
+
+Note: that there is difference in networking and in logging between these 2 approaches.
+
+See https://github.com/alex-ber/AlexBerDocs/tree/master/Docker/Windows for details. 
 
 
 Wait for services started
 
 ```
-docker logs local-hive
+docker exec alex-local-hive checkisup.sh
 ```
 
 You can access bash with the following command

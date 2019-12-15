@@ -1,7 +1,8 @@
 version: '3'
 services:
-  local-hive:
-    image: alexberkovich/docker-hive
+  alex-local-hive:
+    image:  alexberkovich/docker-hive
+    container_name: alex-local-hive
     tty: true
     stdin_open: true
     ports:

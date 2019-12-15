@@ -45,9 +45,9 @@ ENV HADOOP_COMMON_HOME $HADOOP_HOME
 ENV HADOOP_HDFS_HOME $HADOOP_HOME
 ENV YARN_HOME $HADOOP_HOME
 ENV HADOOP_COMMON_LIB_NATIVE_DIR $HADOOP_HOME/lib/native
+ENV HIVE_HOME $HADOOP_HOME/hive
 ENV LD_LIBRARY_PATH $HADOOP_HOME/lib/native/:$LD_LIBRARY_PATH
-ENV PATH $PATH:$HADOOP_HOME/sbin:$HADOOP_HOME/bin
-
+ENV PATH $PATH:$HADOOP_HOME/sbin:$HADOOP_HOME/bin:$HADOOP_HOME/hive/sbin
 
 # config hadoop
 RUN sed -i '/^export JAVA_HOME/ s:.*:export JAVA_HOME=/usr/lib/jvm/jre-1.8.0-openjdk/:' $HADOOP_PREFIX/etc/hadoop/hadoop-env.sh
@@ -61,15 +61,18 @@ COPY conf/yarn-site.xml /usr/local/hadoop/etc/hadoop/yarn-site.xml
 RUN wget https://archive.apache.org/dist/hive/hive-2.3.5/apache-hive-2.3.5-bin.tar.gz
 RUN tar -xzf apache-hive-2.3.5-bin.tar.gz -C /usr/local/hadoop/
 RUN cd /usr/local/hadoop && ln -s ./apache-hive-2.3.5-bin hive
-ENV HIVE_HOME $HADOOP_HOME/hive
+RUN mkdir $HIVE_HOME/sbin
+ENV PATH $PATH:$HIVE_HOME/sbin
+
 
 RUN chown -R root:root /usr/local/hadoop-2.8.5
 RUN $HADOOP_PREFIX/bin/hdfs namenode -format
 COPY ./dfs.sh /etc/dfs.sh
-COPY ./checkisup.sh /etc/checkisup.sh
+COPY sbin/ $HADOOP_HOME/hive/sbin/
 
 RUN /etc/dfs.sh
 
+RUN echo "a"
 COPY ./run.sh /etc/run.sh
 #COPY ./alex_hive_udf.jar ${HIVE_HOME}/auxlib/alex_hive_udf.jar
 
@@ -93,6 +96,6 @@ EXPOSE 10000 10002
 #docker build --squash . -t alex-docker-hive
 #docker run -p 8030-8033:8030-8033 -p 8040:8040 -p 8042:8042 -p 8088:8088 -p 10000:10000 -p 10002:10002 -d --name alex-local-hive alex-docker-hive
 #docker exec -it $(docker ps -q -n=1) bash
-#docker tag alex-docker-hive alexberkovich/docker-hive:0.0.6
-#docker push alexberkovich/docker-hive:0.0.6
+#docker tag alex-docker-hive alexberkovich/docker-hive:0.1.0
+#docker push alexberkovich/docker-hive:0.1.0
 
