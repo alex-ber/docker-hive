@@ -57,10 +57,10 @@ COPY conf/mapred-site.xml /usr/local/hadoop/etc/hadoop/mapred-site.xml
 COPY conf/yarn-site.xml /usr/local/hadoop/etc/hadoop/yarn-site.xml
 
 #install hive
-#RUN wget http://mirror.apache-kr.org/hive/hive-2.3.5/apache-hive-2.3.5-bin.tar.gz
-RUN wget https://archive.apache.org/dist/hive/hive-2.3.5/apache-hive-2.3.5-bin.tar.gz
-RUN tar -xzf apache-hive-2.3.5-bin.tar.gz -C /usr/local/hadoop/
-RUN cd /usr/local/hadoop && ln -s ./apache-hive-2.3.5-bin hive
+#RUN wget http://mirror.apache-kr.org/hive/hive-2.3.6/apache-hive-2.3.6-bin.tar.gz
+RUN wget https://archive.apache.org/dist/hive/hive-2.3.6/apache-hive-2.3.6-bin.tar.gz
+RUN tar -xzf apache-hive-2.3.6-bin.tar.gz -C /usr/local/hadoop/
+RUN cd /usr/local/hadoop && ln -s ./apache-hive-2.3.6-bin hive
 RUN mkdir $HIVE_HOME/sbin
 ENV PATH $PATH:$HIVE_HOME/sbin
 
@@ -72,12 +72,11 @@ COPY sbin/ $HADOOP_HOME/hive/sbin/
 
 RUN /etc/dfs.sh
 
-RUN echo "a"
 COPY ./run.sh /etc/run.sh
 #COPY ./alex_hive_udf.jar ${HIVE_HOME}/auxlib/alex_hive_udf.jar
 
 # clean
-RUN rm hadoop-2.8.5.tar.gz apache-hive-2.3.5-bin.tar.gz
+RUN rm hadoop-2.8.5.tar.gz apache-hive-2.3.6-bin.tar.gz
 
 CMD ["/etc/run.sh"]
 
@@ -96,6 +95,6 @@ EXPOSE 10000 10002
 #docker build --squash . -t alex-docker-hive
 #docker run -p 8030-8033:8030-8033 -p 8040:8040 -p 8042:8042 -p 8088:8088 -p 10000:10000 -p 10002:10002 -d --name alex-local-hive alex-docker-hive
 #docker exec -it $(docker ps -q -n=1) bash
-#docker tag alex-docker-hive alexberkovich/docker-hive:0.1.0
-#docker push alexberkovich/docker-hive:0.1.0
+#docker tag alex-docker-hive alexberkovich/docker-hive:0.1.1
+#docker push alexberkovich/docker-hive:0.1.1
 

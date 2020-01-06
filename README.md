@@ -1,6 +1,6 @@
 # Docker-hive
 
-EMR 5.25.0 cluster single node hadoop docker image. With Amzn linux, Hadoop 2.8.5 and Hive 2.3.5
+EMR 5.28.0 cluster single node hadoop docker image. With Amzn linux, Hadoop 2.8.5 and Hive 2.3.6
 
 ## Prerequisites
 Tested with
@@ -12,7 +12,7 @@ Tested with
 - Amazon Linux
 - Java Open JDK 8
 - Apache Hadoop 2.8.5
-- Apache Hive 2.3.5
+- Apache Hive 2.3.6
 - Configuration Hadoop in a pseudo-distributed mode (Yarn in Single Node), 
 see http://hadoop.apache.org/docs/r2.8.5/hadoop-project-dist/hadoop-common/SingleCluster.html for details. 
 
